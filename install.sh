@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cp -r ./nvim ~/.config/nvim
+cp -r ${dirname $0}/nvim ~/.config/nvim
