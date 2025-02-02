@@ -8,6 +8,7 @@ vim.opt.smartindent = false
 vim.opt.wrap = false
 vim.opt.colorcolumn = "80,120"
 vim.opt.pumheight = 10
+vim.opt.cmdheight = 0
 vim.opt.completeopt = { 'menu' }
 if vim.env.TERM == 'linux' then
     vim.opt.termguicolors = false
