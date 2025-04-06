@@ -16,14 +16,48 @@ return {
                 }
             }
         }
-        vim.api.nvim_create_autocmd('LspAttach', {
+        lspconfig.clangd.setup {
+
+        }
+        lspconfig.ruff.setup {
+            init_options = {
+                settings = {
+                    logLevel = 'info'
+                }
+            }
+        }
+        lspconfig.basedpyright.setup {
+            settings = {
+                basedpyright = {
+                    disableOrganizeImports = true,
+                    analysis = {
+                        autoImportCompletions = true,
+                        autoSearchPaths = true
+                    }
+                }
+            }
+        }
+        vim.api.nvim_create_autocmd("LspAttach", {
             callback = function(args)
                 local client = vim.lsp.get_client_by_id(args.data.client_id)
-                if client:supports_method('textDocument/formatting') then
+                if client == nil then
+                    return
+                end
+                if client.name == 'ruff' then
+                    client.server_capabilities.hoverProvider = false
+                end
+                if client:supports_method('textDocument/formatting') and client.name ~= 'pyright' then
                     vim.api.nvim_create_autocmd('BufWritePre', {
                         buffer = args.buf,
                         callback = function()
                             vim.lsp.buf.format({bufnr = args.buf, id = client.id})
+                            if client.name == "ruff" then
+                                vim.lsp.buf.code_action({
+                                    context = { only = {"source.organizeImports" } },
+                                    apply = true
+                                })
+                                vim.wait(50)
+                            end
                         end,
                     })
                 end
@@ -44,9 +78,10 @@ return {
                 vim.diagnostic.config({float = {
                     border = "single"
                 }})
-            end
+            end,
         })
         vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float(nil, {scope = "cursor", focus = false}) end, { desc = "Show diagnostic"})
+        vim.keymap.set("i", "<c-k>", function() vim.lsp.buf.signature_help() end, { desc = "Show signature help"})
         --[[ vim.opt.updatetime = 100
         vim.api.nvim_create_autocmd({ 'CursorHold' }, {
             group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),

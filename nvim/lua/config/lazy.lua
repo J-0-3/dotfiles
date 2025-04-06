@@ -21,6 +21,10 @@ vim.keymap.set("n", "<leader>w", "<C-w>")
 
 require("config.options")
 
+if vim.g.neovide then
+    require("config.neovide")
+end
+
 require("lazy").setup({
   spec = {
     { import = "plugins" },
