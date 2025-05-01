@@ -13,12 +13,23 @@ return {
     --         })
     --         onedark.load()
     --     end
-    'projekt0n/github-nvim-theme',
-    name = 'github-theme',
+    -- 'projekt0n/github-nvim-theme',
+    -- name = 'github-theme',
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --     require('github-theme').setup({})
+    --     vim.cmd.colorscheme('github_dark')
+    -- end
+    -- "idr4n/github-monochrome.nvim",
+    -- lazy = false,
+    -- priority = 1000,
+    -- opts = {},
+    "zenbones-theme/zenbones.nvim",
+    dependencies = "rktjmp/lush.nvim",
     lazy = false,
     priority = 1000,
-    config = function()
-        require('github-theme').setup({})
-        vim.cmd.colorscheme('github_dark')
+    config = function() 
+        vim.cmd.colorscheme('zenwritten')
     end
 }

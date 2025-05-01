@@ -79,6 +79,7 @@ return {
                     border = "single"
                 }})
             end,
+            -- desc = 'LSP: Disable hover capability from Ruff',
         })
         vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float(nil, {scope = "cursor", focus = false}) end, { desc = "Show diagnostic"})
         vim.keymap.set("i", "<c-k>", function() vim.lsp.buf.signature_help() end, { desc = "Show signature help"})
